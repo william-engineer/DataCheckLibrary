@@ -1,13 +1,20 @@
 #include <stdio.h>
+#if CAMEL_CASE
 #include "DataCheckLib.h"
-#define CRC_ORIGINAL_DATA 10
+#else
+#include "datacheck_lib.h"
+#endif
+
+//#define CRC_ORIGINAL_DATA 10
+
 
 void main(void)
 {
-	unsigned char lArM_u8CrcOriginalData[CRC_ORIGINAL_DATA] = {
-		0x11,0x12,0x13,0x14,0x15,
-		0x32,0x33,0x34,0x35,0x36
+	unsigned char lArM_u8CrcOriginalData[] = {
+		0x01,0x06,0x80,0x00,0x09,0x02
+		
 	};
+	
 
 #if (__CRC_4_ITU_ENABLE_STATUS == CHECK_ENABLE) && (__CRC_4_ITU_CALC_WAY == CRC_STRAIGHTFORWARD_CALC_WAY)
 	printf("get_crc4_itu_straightforward = %02x\r\n", get_crc4_itu_straightforward(lArM_u8CrcOriginalData, CRC_ORIGINAL_DATA));
@@ -127,7 +134,7 @@ void main(void)
 	printf("\r\n");
 
 #if (__CRC_16_MODBUS_ENABLE_STATUS == CHECK_ENABLE) && (__CRC_16_MODBUS_CALC_WAY == CRC_STRAIGHTFORWARD_CALC_WAY)
-	printf("get_crc16_modbus_straightforward = %04x\r\n", get_crc16_modbus_straightforward(lArM_u8CrcOriginalData, CRC_ORIGINAL_DATA));
+	printf("get_crc16_modbus_straightforward = %04x\r\n", get_crc16_modbus_straightforward(lArM_u8CrcOriginalData, sizeof(lArM_u8CrcOriginalData)));
 #endif
 
 #if (__CRC_16_MODBUS_ENABLE_STATUS == CHECK_ENABLE) && (__CRC_16_MODBUS_CALC_WAY == CRC_TABLE_DRIVEN_CALC_WAY)
